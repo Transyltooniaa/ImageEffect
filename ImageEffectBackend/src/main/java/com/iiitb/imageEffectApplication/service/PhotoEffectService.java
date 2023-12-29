@@ -7,20 +7,20 @@ import com.iiitb.imageEffectApplication.EffectImplementation.Invert;
 import com.iiitb.imageEffectApplication.EffectImplementation.Rotation;
 import com.iiitb.imageEffectApplication.EffectImplementation.Sepia;
 import com.iiitb.imageEffectApplication.EffectImplementation.Sharpen;
+import com.iiitb.imageEffectApplication.EffectImplementation.GrayScale;
+import com.iiitb.imageEffectApplication.EffectImplementation.GaussianBlur;
+import com.iiitb.imageEffectApplication.EffectImplementation.HueSaturation;
 
 import com.iiitb.imageEffectApplication.exception.IllegalParameterException;
-
-import com.iiitb.imageEffectApplication.libraryInterfaces.GrayscaleInterface;
 import com.iiitb.imageEffectApplication.libraryInterfaces.Pixel;
-
-
-import com.iiitb.imageEffectApplication.libraryInterfaces.SharpenInterface;
 import com.iiitb.imageEffectApplication.utils.ProcessingUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 
 @Service
@@ -41,12 +41,22 @@ public class PhotoEffectService {
             // ACTUAL WORK STARTS HERE
 
             // TODO
-            Pixel[][] modifiedImage = inputImage; // Replace this with actual modified image
+            HueSaturation hueSaturation = new HueSaturation();
+
+            try {
+                hueSaturation.setParameter("hue", hueAmount);
+                hueSaturation.setParameter("saturation", saturationAmount);
+            }
+
+            catch (IllegalParameterException e) {
+                e.printStackTrace();
+            }
+
+            Pixel[][] modifiedImage = hueSaturation.apply(inputImage, imageName, loggingService);// Replace this with actual modified image
 
             // ACTUAL WORK ENDS HERE
-
-
             return processingUtils.postProcessing(modifiedImage);
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -154,7 +164,18 @@ public class PhotoEffectService {
             // ACTUAL WORK STARTS HERE
 
             // TODO
-            Pixel[][] modifiedImage = inputImage; // Replace this with actual modified image
+            GaussianBlur gaussianBlur = new GaussianBlur();
+
+            try{
+                gaussianBlur.setParameterValue(radius);
+            }
+            catch(IllegalParameterException e){
+                e.printStackTrace();
+            }
+
+            Pixel[][] modifiedImage = gaussianBlur.apply(inputImage, imageName, loggingService);// Replace this with actual modified image
+
+
 
             // ACTUAL WORK ENDS HERE
 
@@ -177,7 +198,17 @@ public class PhotoEffectService {
             // ACTUAL WORK STARTS HERE
 
             // TODO
-            Pixel[][] modifiedImage = GrayscaleInterface.applyGrayscale(inputImage); // Replace this with actual modified image
+            GrayScale grayScale = new GrayScale();
+            
+            try{
+                grayScale.setParameterValue(1);
+            }
+            catch(IllegalParameterException e){
+                e.printStackTrace();
+            }
+
+            Pixel[][] modifiedImage = grayScale.apply(inputImage, imageName, loggingService);// Replace this with actual modified image
+
 
             // ACTUAL WORK ENDS HERE
 

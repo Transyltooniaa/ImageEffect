@@ -10,7 +10,16 @@ public class Rotation implements SingleValueDiscreteEffect {
     private int parameter;
     @Override
     public Pixel[][] apply(Pixel[][] image, String fileName, LoggingService loggingService) {
-        loggingService.addLog(fileName, "Rotation",  Integer.toString(parameter));
+
+        if(parameter == 0)
+            loggingService.addLog(fileName, "Rotation", "None");
+        else if(parameter == 1)
+            loggingService.addLog(fileName, "Rotation", "90");
+        else if(parameter == 2)
+            loggingService.addLog(fileName, "Rotation", "180");
+        else if(parameter == 3)
+            loggingService.addLog(fileName, "Rotation", "270");
+
         return com.iiitb.imageEffectApplication.libraryInterfaces.RotationInterface.applyRotation(image,parameter);
     }
 

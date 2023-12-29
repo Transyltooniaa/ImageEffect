@@ -22,7 +22,7 @@ public class Invert implements SingleValueDiscreteEffect {
 
     @Override
     public Pixel[][] apply(Pixel[][] image, String fileName, LoggingService loggingService) {
-            loggingService.addLog(fileName, "Invert", Integer.toString(parameter));
+            loggingService.addLog(fileName, "Invert", "None");
             return com.iiitb.imageEffectApplication.libraryInterfaces.InvertInterface.applyInvert(image);
     }
 }

@@ -14,7 +14,7 @@ public class Sharpen implements SingleValueParameterizableEffect {
     @Override
     public Pixel[][] apply(Pixel[][] image, String fileName, LoggingService loggingService) {
 
-        loggingService.addLog(fileName, "Sharpen", Float.toString(parameter));
+        loggingService.addLog(fileName, "Sharpen", "None");
         return SharpenInterface.applySharpen(image, parameter);
     }
 

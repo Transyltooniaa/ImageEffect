@@ -25,7 +25,13 @@ public class Flip implements DiscreteEffect {
     @Override
     public Pixel[][] apply(Pixel[][] image, String fileName, LoggingService loggingService) {
 
-        loggingService.addLog(fileName, "Flip",  horizontalFlipValue + " " + verticalFlipValue);
+        if(horizontalFlipValue == 1)
+            loggingService.addLog(fileName, "Flip", "Horizontal");
+        else if(verticalFlipValue == 1)
+            loggingService.addLog(fileName, "Flip", "Vertical");
+        else
+            loggingService.addLog(fileName, "Flip", "None");
+
         return FlipInterface.applyFlip(image, horizontalFlipValue, verticalFlipValue);
     }
 }
