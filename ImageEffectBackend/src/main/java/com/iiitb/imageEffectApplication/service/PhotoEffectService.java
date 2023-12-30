@@ -15,6 +15,8 @@ import com.iiitb.imageEffectApplication.exception.IllegalParameterException;
 import com.iiitb.imageEffectApplication.libraryInterfaces.Pixel;
 import com.iiitb.imageEffectApplication.utils.ProcessingUtils;
 
+import java.math.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,8 +46,8 @@ public class PhotoEffectService {
             HueSaturation hueSaturation = new HueSaturation();
 
             try {
-                hueSaturation.setParameter("hue", hueAmount);
-                hueSaturation.setParameter("saturation", saturationAmount);
+                hueSaturation.setParameter("hue", (hueAmount-100)/100 + 1);
+                hueSaturation.setParameter("saturation", (saturationAmount-100)/100 + 1);
             }
 
             catch (IllegalParameterException e) {
@@ -76,7 +78,7 @@ public class PhotoEffectService {
             Brightness brightness = new Brightness();
 
             try{
-                brightness.setParameterValue(amount);
+                brightness.setParameterValue(255*(amount-100)/100);
             }
 
             catch(IllegalParameterException e) {
@@ -105,7 +107,7 @@ public class PhotoEffectService {
             Contrast contrast = new Contrast();
 
             try{
-                contrast.setParameterValue(amount);
+                contrast.setParameterValue(((amount-100)/100)+1.5f);
             }
             catch(IllegalParameterException e){
                 e.printStackTrace();
@@ -322,7 +324,7 @@ public class PhotoEffectService {
             Sharpen sharpen = new Sharpen();
 
             try{
-                sharpen.setParameterValue(amount);
+                sharpen.setParameterValue((amount-100)/100+1);
             }
             catch(IllegalParameterException e){
                 e.printStackTrace();

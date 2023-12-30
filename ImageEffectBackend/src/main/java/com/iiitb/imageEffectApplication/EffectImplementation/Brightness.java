@@ -1,6 +1,5 @@
 package com.iiitb.imageEffectApplication.EffectImplementation;
 
-import com.iiitb.imageEffectApplication.EffectImplementation.Brightness;
 import com.iiitb.imageEffectApplication.baseEffects.SingleValueParameterizableEffect;
 import com.iiitb.imageEffectApplication.exception.IllegalParameterException;
 import com.iiitb.imageEffectApplication.libraryInterfaces.BrightnessInterface;
@@ -21,7 +20,7 @@ public class Brightness implements SingleValueParameterizableEffect
     @Override
     public void setParameterValue(float parameterValue) throws IllegalParameterException{
 
-        if (parameterValue < 0 || parameterValue > 255) {
+        if (parameterValue < -255 || parameterValue > 255) {
             throw new IllegalParameterException("Illegal parameter for Brightness effect");
         }
 

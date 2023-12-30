@@ -38,4 +38,3 @@ void ApplySharpen(vector<vector<Pixel> >& resultImage, float amount) {
         }
     }
 }
-

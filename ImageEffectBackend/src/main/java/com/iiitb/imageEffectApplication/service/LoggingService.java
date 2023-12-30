@@ -63,8 +63,21 @@ public class LoggingService {
                 String sp[] = line.split(" ");
                 String fileName = sp[0];
                 String effectName = sp[1];
-                String optionValues = sp[2];
-                String timestamp = sp[3];
+                String optionValues;
+                String timestamp;
+
+                if(effectName.equals("HueSaturation"))
+                {
+
+                    optionValues = sp[2] + " " + String.format("%.2f",Double.parseDouble(sp[3])) + " " + sp[4] + " " +  String.format("%.2f",Double.parseDouble(sp[5]));;
+                    timestamp = sp[6];
+                }
+
+                else{
+
+                    optionValues =  sp[2];
+                    timestamp = sp[3];
+                }
 
                 LogModel logModel = new LogModel(timestamp, fileName, effectName, optionValues);
                 allLogs.add(logModel);
@@ -84,36 +97,7 @@ public class LoggingService {
 
         List<LogModel> logsByEffect = new ArrayList<LogModel>();
 
-        try
-        {
-            File logFile = new File("logfile.txt");
-
-            FileReader fileReader = new FileReader(logFile);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-            String line;
-
-            while ((line = bufferedReader.readLine()) != null)
-            {
-                String sp[] = line.split(" ");
-                String fileName = sp[0];
-                String effect = sp[1];
-                String optionValues = sp[2];
-                String timestamp = sp[3];
-
-                if (effect.equalsIgnoreCase(effectName))
-                {
-                    LogModel logModel = new LogModel(timestamp, fileName, effect, optionValues);
-                    logsByEffect.add(logModel);
-                }
-            }
-        }
-
-        catch (IOException e)
-        {
-            System.out.println("Error occurred while reading log file.");
-            System.out.println(e);
-        }
+        logsByEffect = getAllLogs().stream().filter(log -> log.getEffectName().equalsIgnoreCase(effectName)).collect(Collectors.toList());
 
         return logsByEffect;
     }
@@ -138,38 +122,19 @@ public class LoggingService {
 
         List<LogModel> logsBetweenTimestamps= new ArrayList<LogModel>();
 
-        try
+        logsBetweenTimestamps = getAllLogs();
+
+        for(int i = 0; i < logsBetweenTimestamps.size(); i++)
         {
-            File logFile = new File("logfile.txt");
+            LocalDateTime timestamp = LocalDateTime.parse(logsBetweenTimestamps.get(i).getTimestamp());
 
-            FileReader fileReader = new FileReader(logFile);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-            String line;
-
-            while ((line = bufferedReader.readLine()) != null)
+            if (timestamp.isBefore(startTime) || timestamp.isAfter(endTime))
             {
-                String sp[] = line.split(" ");
-                String fileName = sp[0];
-                String effectName = sp[1];
-                String optionValues = sp[2];
-                String timestamp = sp[3];
-
-                LocalDateTime effectTimeStamp = LocalDateTime.parse(timestamp);
-
-                if (effectTimeStamp.isAfter(startTime) && effectTimeStamp.isBefore(endTime))
-                {
-                    LogModel logModel = new LogModel(timestamp, fileName, effectName, optionValues);
-                    logsBetweenTimestamps.add(logModel);
-                }
+                logsBetweenTimestamps.remove(i);
+                i--;
             }
         }
 
-        catch (IOException e)
-        {
-            System.out.println("Error occurred while reading log file.");
-            System.out.println(e);
-        }
 
         return logsBetweenTimestamps;
     }

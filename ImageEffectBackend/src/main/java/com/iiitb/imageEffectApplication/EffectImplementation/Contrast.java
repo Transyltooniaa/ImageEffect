@@ -19,7 +19,7 @@ public class Contrast implements SingleValueParameterizableEffect{
   @Override
   public void setParameterValue(float parameterValue) throws IllegalParameterException{
 
-        if (parameterValue < 0 || parameterValue > 255)
+        if (parameterValue < -1 || parameterValue > 2.5)
           throw new IllegalParameterException("Illegal parameter for Contrast effect");
 
         this.parameter = parameterValue;

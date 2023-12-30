@@ -22,7 +22,7 @@ public class HueSaturation implements ParameterizableEffect{
         if(paramName.equals("hue"))
             this.Hueparameter = value;
 
-        else if(paramName.equals("saturation"))
+        if(paramName.equals("saturation"))
             this.Saturationparameter = value;
     }
 
@@ -30,7 +30,7 @@ public class HueSaturation implements ParameterizableEffect{
     public Pixel[][] apply(Pixel[][] image, String fileName, LoggingService loggingService) {
         String hue = String.valueOf(Hueparameter);
         String saturation = String.valueOf(Saturationparameter);
-        loggingService.addLog(fileName, "HueSaturation", "H:" + hue + " S:" + saturation);
+        loggingService.addLog(fileName, "HueSaturation", "Hue: " + hue + " Saturation: " + saturation);
         return com.iiitb.imageEffectApplication.libraryInterfaces.HueSaturationInterface.applyHueSaturation(image, Hueparameter, Saturationparameter);
 
     }
