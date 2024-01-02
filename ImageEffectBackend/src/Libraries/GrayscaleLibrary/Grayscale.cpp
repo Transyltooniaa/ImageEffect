@@ -10,13 +10,13 @@ void ApplyGrayscale(vector<vector<Pixel> >& image)
     {
         for (int j = 0; j < image[i].size(); j++)
         {
-            // Get average of RGB values and assign it to each channel of the pixel (gray)
-            int avg = (image[i][j].r + image[i][j].g + image[i][j].b) / 3;
+            // Using luminance formula to calculate average
+            int lmf = image[i][j].r * 0.2126 +  image[i][j].g * 0.7152 +  image[i][j].b * 0.0722;
 
             // Assign average to each channel
-            image[i][j].r = avg;
-            image[i][j].g = avg;
-            image[i][j].b = avg;
+            image[i][j].r = lmf;
+            image[i][j].g = lmf;
+            image[i][j].b = lmf;
         }
     }
 }
