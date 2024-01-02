@@ -35,7 +35,7 @@ Implemented Image effects Invert and Rotation. Implemented logging service for S
 
 
 ### IMT2022566 ADITYA PRAKASH
-Implemented Image effects Sepia. Implemented logging service for Sepia. Implemntation of multithreading
+Implemented Image effects Sepia. Implemented logging service for Sepia. Implementation of multithreading
 
 &nbsp;
 
