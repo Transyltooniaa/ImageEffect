@@ -1,5 +1,6 @@
 package com.iiitb.imageEffectApplication.EffectImplementation;
 
+import com.iiitb.imageEffectApplication.multithread.multithread;
 import com.iiitb.imageEffectApplication.baseEffects.SingleValueDiscreteEffect;
 import com.iiitb.imageEffectApplication.exception.IllegalParameterException;
 import com.iiitb.imageEffectApplication.libraryInterfaces.Pixel;
@@ -34,10 +35,17 @@ public class Invert implements SingleValueDiscreteEffect {
     @Override
     public Pixel[][] apply(Pixel[][] image, String fileName, LoggingService loggingService) {
 
-            // Add the log for the effect
-            loggingService.addLog(fileName, "Invert", "None");
+        // Add the log for the effect
+        multithread m = new multithread(loggingService, fileName, "Invert", "None");
+        m.start();
+        Pixel[][] temp =  com.iiitb.imageEffectApplication.libraryInterfaces.InvertInterface.applyInvert(image);
+        try{
+            m.join();
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return temp;
 
-            // Apply the effect and return the image
-            return com.iiitb.imageEffectApplication.libraryInterfaces.InvertInterface.applyInvert(image);
     }
 }

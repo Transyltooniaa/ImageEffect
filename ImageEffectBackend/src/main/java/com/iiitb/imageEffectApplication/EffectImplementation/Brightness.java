@@ -1,4 +1,5 @@
 package com.iiitb.imageEffectApplication.EffectImplementation;
+import com.iiitb.imageEffectApplication.multithread.multithread;
 
 import com.iiitb.imageEffectApplication.baseEffects.SingleValueParameterizableEffect;
 import com.iiitb.imageEffectApplication.exception.IllegalParameterException;
@@ -35,7 +36,15 @@ public class Brightness implements SingleValueParameterizableEffect
     public Pixel[][] apply(Pixel[][] image, String fileName, LoggingService loggingService)
     {
         // Add the log for the effect
-        loggingService.addLog(fileName, "Brightness",  Float.toString(parameter));
-        return BrightnessInterface.applyBrightness(image, parameter);
+        multithread m = new multithread(loggingService, fileName, "Brightness", Float.toString(parameter));
+        m.start();
+        Pixel[][] temp =  BrightnessInterface.applyBrightness(image, parameter);
+        try{
+            m.join();
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return temp;
     }
 }

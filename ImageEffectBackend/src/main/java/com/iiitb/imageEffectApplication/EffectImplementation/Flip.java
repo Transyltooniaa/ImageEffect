@@ -1,5 +1,6 @@
 package com.iiitb.imageEffectApplication.EffectImplementation;
 
+import com.iiitb.imageEffectApplication.multithread.multithread;
 import com.iiitb.imageEffectApplication.baseEffects.DiscreteEffect;
 import com.iiitb.imageEffectApplication.exception.IllegalParameterException;
 import com.iiitb.imageEffectApplication.libraryInterfaces.Pixel;
@@ -43,15 +44,39 @@ public class Flip implements DiscreteEffect {
     @Override
     public Pixel[][] apply(Pixel[][] image, String fileName, LoggingService loggingService) {
 
-        // Add the log for the effect
-        if(horizontalFlipValue == 1)
-            loggingService.addLog(fileName, "Flip", "Horizontal");
-        else if(verticalFlipValue == 1)
-            loggingService.addLog(fileName, "Flip", "Vertical");
-        else
-            loggingService.addLog(fileName, "Flip", "None");
 
-        // Apply the effect and return the image
-        return FlipInterface.applyFlip(image, horizontalFlipValue, verticalFlipValue);
+        // Add the log for the effect
+        if (horizontalFlipValue == 1) {
+            multithread m = new multithread(loggingService, fileName, "Flip", "Horizontal");
+            m.start();
+            Pixel[][] temp = FlipInterface.applyFlip(image, horizontalFlipValue, verticalFlipValue);
+            try {
+                m.join();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            return temp;
+        } else if (verticalFlipValue == 1) {
+            multithread m = new multithread(loggingService, fileName, "Flip", "Vertical");
+            m.start();
+            Pixel[][] temp = FlipInterface.applyFlip(image, horizontalFlipValue, verticalFlipValue);
+            try {
+                m.join();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            return temp;
+        } else {
+            multithread m = new multithread(loggingService, fileName, "Flip", "None");
+            m.start();
+            Pixel[][] temp = FlipInterface.applyFlip(image, horizontalFlipValue, verticalFlipValue);
+            try {
+                m.join();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            return temp;
+        }
+
     }
 }

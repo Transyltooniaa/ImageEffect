@@ -1,6 +1,6 @@
 package com.iiitb.imageEffectApplication.EffectImplementation;
 
-
+import com.iiitb.imageEffectApplication.multithread.multithread;
 import com.iiitb.imageEffectApplication.baseEffects.SingleValueDiscreteEffect;
 import com.iiitb.imageEffectApplication.exception.IllegalParameterException;
 import com.iiitb.imageEffectApplication.libraryInterfaces.Pixel;
@@ -24,10 +24,17 @@ public class GrayScale implements SingleValueDiscreteEffect {
     public Pixel[][] apply(Pixel[][] image, String fileName, LoggingService loggingService) {
 
         // Add the log for the effect
-        loggingService.addLog(fileName, "GrayScale", "None");
+        multithread m = new multithread(loggingService, fileName, "GrayScale", "None");
+        m.start();
+        Pixel[][] temp =  GrayscaleInterface.applyGrayscale(image);
+        try{
+            m.join();
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return temp;
 
-        // Apply the effect and return the image
-        return GrayscaleInterface.applyGrayscale(image);
     }
 
     // Set the parameter value for the effect

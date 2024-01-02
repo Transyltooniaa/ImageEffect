@@ -1,5 +1,6 @@
 package com.iiitb.imageEffectApplication.EffectImplementation;
 
+import com.iiitb.imageEffectApplication.multithread.multithread;
 import com.iiitb.imageEffectApplication.baseEffects.SingleValueParameterizableEffect;
 import com.iiitb.imageEffectApplication.exception.IllegalParameterException;
 import com.iiitb.imageEffectApplication.libraryInterfaces.ContrastInterface;
@@ -33,9 +34,18 @@ public class Contrast implements SingleValueParameterizableEffect{
   // Apply the effect
   public Pixel[][] apply(Pixel[][] image, String fileName, LoggingService loggingService)
   {
-    // Add the log for the effect
-    loggingService.addLog(fileName, "Contrast",  Float.toString(parameter));
-    return ContrastInterface.applyContrast(image,parameter);
+
+
+    multithread m = new multithread(loggingService, fileName, "Contrast", Float.toString(parameter));
+    m.start();
+    Pixel[][] temp =  ContrastInterface.applyContrast(image,parameter);
+    try{
+      m.join();
+    }
+    catch(Exception e){
+      System.out.println(e);
+    }
+    return temp;
   }
 
 }

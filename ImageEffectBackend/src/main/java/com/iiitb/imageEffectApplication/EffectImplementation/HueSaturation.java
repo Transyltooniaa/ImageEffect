@@ -1,5 +1,6 @@
 package com.iiitb.imageEffectApplication.EffectImplementation;
 
+import com.iiitb.imageEffectApplication.multithread.multithread;
 import com.iiitb.imageEffectApplication.baseEffects.ParameterizableEffect;
 import com.iiitb.imageEffectApplication.exception.IllegalParameterException;
 import com.iiitb.imageEffectApplication.libraryInterfaces.Pixel;
@@ -54,10 +55,17 @@ public class HueSaturation implements ParameterizableEffect{
         // Add the log for the effect
         String hue = String.valueOf(Hueparameter);
         String saturation = String.valueOf(Saturationparameter);
-        loggingService.addLog(fileName, "HueSaturation", "Hue: " + hue + " Saturation: " + saturation);
 
-        //  Apply the effect and return the image
-        return com.iiitb.imageEffectApplication.libraryInterfaces.HueSaturationInterface.applyHueSaturation(image, Hueparameter, Saturationparameter);
+        multithread m = new multithread(loggingService, fileName, "HueSaturation", "Hue: " + hue + " Saturation: " + saturation);
+        m.start();
+        Pixel[][] temp =  com.iiitb.imageEffectApplication.libraryInterfaces.HueSaturationInterface.applyHueSaturation(image, Hueparameter, Saturationparameter);
+        try{
+            m.join();
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
 
+        return temp;
     }
 }

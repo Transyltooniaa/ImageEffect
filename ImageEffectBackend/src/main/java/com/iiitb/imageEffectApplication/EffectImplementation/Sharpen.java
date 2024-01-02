@@ -1,6 +1,6 @@
 package com.iiitb.imageEffectApplication.EffectImplementation;
 
-
+import com.iiitb.imageEffectApplication.multithread.multithread;
 import com.iiitb.imageEffectApplication.baseEffects.SingleValueParameterizableEffect;
 import com.iiitb.imageEffectApplication.exception.IllegalParameterException;
 import com.iiitb.imageEffectApplication.libraryInterfaces.Pixel;
@@ -21,11 +21,18 @@ public class Sharpen implements SingleValueParameterizableEffect {
      // Apply the effect and return the image
     @Override
     public Pixel[][] apply(Pixel[][] image, String fileName, LoggingService loggingService) {
-        // Add the log for the effect
-        loggingService.addLog(fileName, "Sharpen", Float.toString(parameter));
 
-        // Apply the effect and return the image
-        return SharpenInterface.applySharpen(image, parameter);
+            // Add the log for the effect
+            multithread m = new multithread(loggingService, fileName, "Sharpen", Float.toString(parameter));
+            m.start();
+            Pixel[][] temp =  SharpenInterface.applySharpen(image, parameter);
+            try{
+                m.join();
+            }
+            catch(Exception e){
+                System.out.println(e);
+            }
+            return temp;
     }
 
 
