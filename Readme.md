@@ -48,7 +48,7 @@ Explore the logs for each effect gracefully displayed on the website. Navigate t
 
 # 🚀 HOW TO RUN IMAGE EFFECT APPLICATION 🚀
 
-### INITIAL SETUP (Common for both Mac as well as Windows Users)
+### INITIAL SETUP (Common for both Mac as well as Linux Users)
 
 * Cloning the repository on local System
 
@@ -68,7 +68,7 @@ With this you done with the initial setup.
 
 &nbsp;
 
-### 🎨 SETUP COMMANDS FOR FRONTEND 🖌️ (Common for both Mac and Windows users)
+### 🎨 SETUP COMMANDS FOR FRONTEND 🖌️ (Common for both Mac and Linux users)
 
 In your bash terminal, Navigate to  ImageEffectFrontend using the commands given below : 
 
@@ -117,13 +117,13 @@ Follow these steps to compile and start the enchanting server:
      make
      ```
   
-     #### NOTE : The Makefile present in the folder is for macOS.  You can find the Makefile for windows in a folder called makefile for windows
+     #### NOTE : The Makefile present in the folder is for macOS.  You can find the Makefile for Linux in a folder called MakefileLinux.
     
      ##### 💔 POSSIBLE ERROR: JNI.h not found 
 
      ###### 💡 SOLUTION: check if your jvm has jni.h file. It is generally present in the 'include' folder. Or Ensure the `Makefile` aligns with your Java path and version. Make necessary changes if required.
 
-2. **Using Maven? 🌍:** (For Windows Users)
+2. **Using Maven? 🌍:** (For Linux Users)
    - If Maven is already installed on your machine , run:
      ```bash
      sudo mvn clean package
