@@ -5,7 +5,6 @@ using namespace std;
 // Function to apply grayscale effect
 void ApplyGrayscale(vector<vector<Pixel> >& image)
 {
-
     // Loop over image pixels
     for (int i = 0; i < image.size(); i++)
     {

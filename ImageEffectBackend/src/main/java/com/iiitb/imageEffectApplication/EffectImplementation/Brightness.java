@@ -17,19 +17,24 @@ public class Brightness implements SingleValueParameterizableEffect
         return parameter;
     }
 
+    // Set the parameter value for the effect
     @Override
     public void setParameterValue(float parameterValue) throws IllegalParameterException{
 
+        // Check if the parameter is in the range -255 to 255
         if (parameterValue < -255 || parameterValue > 255) {
             throw new IllegalParameterException("Illegal parameter for Brightness effect");
         }
 
+        // Set the parameter
         this.parameter = parameterValue;
     }
 
+    // Apply the effect
     @Override
     public Pixel[][] apply(Pixel[][] image, String fileName, LoggingService loggingService)
     {
+        // Add the log for the effect
         loggingService.addLog(fileName, "Brightness",  Float.toString(parameter));
         return BrightnessInterface.applyBrightness(image, parameter);
     }

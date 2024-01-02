@@ -6,7 +6,7 @@
 using namespace std;
 
 
-// Brightness
+// Brightness filter
 void applyBrightness(vector<vector<Pixel> >& image, float value) {
 
     for (int i = 0; i < image.size(); i++) {

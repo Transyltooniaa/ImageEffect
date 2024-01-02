@@ -25,6 +25,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+
+// Service class for the application which will be called by the controller
 @Service
 public class PhotoEffectService {
 
@@ -43,17 +45,22 @@ public class PhotoEffectService {
             // ACTUAL WORK STARTS HERE
 
             // TODO
+
+            // Instantiate the effect class and set the parameter
             HueSaturation hueSaturation = new HueSaturation();
 
+            // Set the parameter value
             try {
                 hueSaturation.setParameter("hue", (hueAmount-100)/100 + 1);
                 hueSaturation.setParameter("saturation", (saturationAmount-100)/100 + 1);
             }
 
+            // Catch the exception if the parameter is not in the range
             catch (IllegalParameterException e) {
                 e.printStackTrace();
             }
 
+            // Apply the effect and return the image
             Pixel[][] modifiedImage = hueSaturation.apply(inputImage, imageName, loggingService);// Replace this with actual modified image
 
             // ACTUAL WORK ENDS HERE
@@ -75,19 +82,24 @@ public class PhotoEffectService {
             // ACTUAL WORK STARTS HERE
 
             // TODO
+
+            // Instantiate the effect class and set the parameter
             Brightness brightness = new Brightness();
 
+            // Set the parameter value for the effect
             try{
                 brightness.setParameterValue(255*(amount-100)/100);
             }
 
+            // Catch the exception if the parameter is not in the range
             catch(IllegalParameterException e) {
                 e.printStackTrace();
             }
+
+            // Apply the effect and return the image
             Pixel[][] modifiedImage = brightness.apply(inputImage, imageName, loggingService);// Replace this with actual modified image
 
             // ACTUAL WORK ENDS HERE
-
             return processingUtils.postProcessing(modifiedImage);
 
         } catch (IOException e) {
@@ -104,8 +116,11 @@ public class PhotoEffectService {
             // ACTUAL WORK STARTS HERE
 
             // TODO
+
+            // Instantiate the effect class and set the parameter
             Contrast contrast = new Contrast();
 
+            // Set the parameter value for the effect and catch the exception if the parameter is not in the range
             try{
                 contrast.setParameterValue(((amount-100)/100)+1.5f);
             }
@@ -113,10 +128,10 @@ public class PhotoEffectService {
                 e.printStackTrace();
             }
 
+            // Apply the effect and return the image
             Pixel[][] modifiedImage = contrast.apply(inputImage, imageName, loggingService);// Replace this with actual modified image
 
             // ACTUAL WORK ENDS HERE
-
             return processingUtils.postProcessing(modifiedImage);
 
         } catch (IOException e) {
@@ -133,18 +148,23 @@ public class PhotoEffectService {
             // ACTUAL WORK STARTS HERE
 
             // TODO
+
+            // Instantiate the effect class and set the parameter
             Flip flip = new Flip();
 
+
+            // Set the parameter value for the effect and catch the exception if the parameter is not in the range
             try {
                 flip.selectOptionValue("horizontalFlip", horizontalFlipValue);
                 flip.selectOptionValue("verticalFlip", verticalFlipValue);
             }
 
+            // Catch the exception if the parameter is not in the range
             catch (IllegalParameterException e) {
                 e.printStackTrace();
             }
 
-
+            // Apply the effect and return the image
             Pixel[][] modifiedImage = flip.apply(inputImage, imageName, loggingService);// Replace this with actual modified image
 
             // ACTUAL WORK ENDS HERE
@@ -166,22 +186,26 @@ public class PhotoEffectService {
             // ACTUAL WORK STARTS HERE
 
             // TODO
+
+            // Instantiate the effect class and set the parameter
             GaussianBlur gaussianBlur = new GaussianBlur();
 
+
+            //  Set the parameter value for the effect and catch the exception if the parameter is not in the range
             try{
                 gaussianBlur.setParameterValue(radius);
             }
+
+            // Catch the exception if the parameter is not in the range
             catch(IllegalParameterException e){
                 e.printStackTrace();
             }
 
+
+            // Apply the effect and return the image
             Pixel[][] modifiedImage = gaussianBlur.apply(inputImage, imageName, loggingService);// Replace this with actual modified image
 
-
-
             // ACTUAL WORK ENDS HERE
-
-
 
             return processingUtils.postProcessing(modifiedImage);
 
@@ -200,8 +224,11 @@ public class PhotoEffectService {
             // ACTUAL WORK STARTS HERE
 
             // TODO
+
+            // Instantiate the effect class and set the parameter
             GrayScale grayScale = new GrayScale();
-            
+
+            // Set the parameter value for the effect and catch the exception if the parameter is not in the range
             try{
                 grayScale.setParameterValue(1);
             }
@@ -209,8 +236,8 @@ public class PhotoEffectService {
                 e.printStackTrace();
             }
 
+            // Apply the effect and return the image
             Pixel[][] modifiedImage = grayScale.apply(inputImage, imageName, loggingService);// Replace this with actual modified image
-
 
             // ACTUAL WORK ENDS HERE
 
@@ -259,8 +286,12 @@ public class PhotoEffectService {
             // ACTUAL WORK STARTS HERE
 
             // TODO
-            Rotation rotation = new Rotation();
 
+            // Instantiate the effect class and set the parameter
+            Rotation rotation = new Rotation();
+            
+            
+            // Set the parameter value for the effect and catch the exception if the parameter is not in the range
             try{
                 rotation.setParameterValue(value);
             }
@@ -268,7 +299,7 @@ public class PhotoEffectService {
                 e.printStackTrace();
             }
 
-
+            // Apply the effect and return the image
             Pixel[][] modifiedImage = rotation.apply(inputImage, imageName, loggingService);// Replace this with actual modified image
 
 
@@ -291,19 +322,23 @@ public class PhotoEffectService {
             // ACTUAL WORK STARTS HERE
             // TODO
 
+            // Instantiate the effect class and set the parameter
             Sepia sepia = new Sepia();
 
+            //  Set the parameter value for the effect and catch the exception if the parameter is not in the range
             try{
                 sepia.setParameterValue(1);
             }
+
+            // Catch the exception if the parameter is not in the range
             catch(IllegalParameterException e){
                 e.printStackTrace();
             }
 
+            // Apply the effect and return the image
             Pixel[][] modifiedImage = sepia.apply(inputImage, imageName, loggingService);// Replace this with actual modified image
 
             // ACTUAL WORK ENDS HERE
-
             return processingUtils.postProcessing(modifiedImage);
 
         } catch (IOException e) {
@@ -321,8 +356,10 @@ public class PhotoEffectService {
 
             // TODO
 
+            // Instantiate the effect class and set the parameter
             Sharpen sharpen = new Sharpen();
 
+            // Set the parameter value for the effect and catch the exception if the parameter is not in the range
             try{
                 sharpen.setParameterValue((amount-100)/100+1);
             }
@@ -330,9 +367,8 @@ public class PhotoEffectService {
                 e.printStackTrace();
             }
 
+            // Apply the effect and return the image
             Pixel[][] modifiedImage = sharpen.apply(inputImage, imageName, loggingService);// Replace this with actual modified image
-
-
 
             // ACTUAL WORK ENDS HERE
 
